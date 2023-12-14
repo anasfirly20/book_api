@@ -35,6 +35,7 @@ func serveApplication() {
 	router := gin.Default()
 
 	router.GET("/books", controller.FindBooks)
+	router.POST("/books", controller.CreateBook)
 	
 	router.Run(":8000")
 	fmt.Println("Server running on port 8000")
