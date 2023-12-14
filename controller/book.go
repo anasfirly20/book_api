@@ -38,3 +38,22 @@ func FindBookById(c *gin.Context) {
 	
 	c.JSON(http.StatusOK, gin.H{"data": book})
 }
+
+func UpdateBook(c *gin.Context) {
+	// Get model if exist
+	var book model.Book
+	if err := database.Database.Where("id= ?", c.Param("id")).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	}
+
+	// Validate input
+	var input model.UpdateBookInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	database.Database.Model(&book).Updates(input)
+	
+	c.JSON(http.StatusOK, gin.H{"data": book})
+}

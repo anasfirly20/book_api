@@ -37,6 +37,7 @@ func serveApplication() {
 	router.GET("/books", controller.FindBooks)
 	router.POST("/books", controller.CreateBook)
 	router.GET("/books/:id", controller.FindBookById)
+	router.PATCH("books/:id", controller.UpdateBook)
 	
 	router.Run(":8000")
 	fmt.Println("Server running on port 8000")
