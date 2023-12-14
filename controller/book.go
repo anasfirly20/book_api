@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FindBooks(c *gin.Context) {
+func GetBooks(c *gin.Context) {
 	var books []model.Book
 	database.Database.Find(&books)
 
@@ -28,7 +28,7 @@ func CreateBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"data": book})
 }
 
-func FindBookById(c *gin.Context) {
+func GetBookById(c *gin.Context) {
 	var book model.Book
 
 	if err := database.Database.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
@@ -42,8 +42,9 @@ func FindBookById(c *gin.Context) {
 func UpdateBook(c *gin.Context) {
 	// Get model if exist
 	var book model.Book
-	if err := database.Database.Where("id= ?", c.Param("id")).First(&book).Error; err != nil {
+	if err := database.Database.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
 	}
 
 	// Validate input

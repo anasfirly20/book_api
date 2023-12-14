@@ -34,9 +34,9 @@ func loadEnv() {
 func serveApplication() {
 	router := gin.Default()
 
-	router.GET("/books", controller.FindBooks)
+	router.GET("/books", controller.GetBooks)
 	router.POST("/books", controller.CreateBook)
-	router.GET("/books/:id", controller.FindBookById)
+	router.GET("/books/:id", controller.GetBookById)
 	router.PATCH("books/:id", controller.UpdateBook)
 	router.DELETE("books/:id", controller.DeleteBook)
 	
