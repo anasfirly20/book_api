@@ -3,6 +3,7 @@ package controller
 import (
 	"book_api/database"
 	"book_api/model"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -56,4 +57,18 @@ func UpdateBook(c *gin.Context) {
 	database.Database.Model(&book).Updates(input)
 	
 	c.JSON(http.StatusOK, gin.H{"data": book})
+}
+
+func DeleteBook(c *gin.Context) {
+	var book model.Book
+	if err := database.Database.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	fmt.Println(">>>", &book)
+	fmt.Println("2 >>>", book)
+	database.Database.Delete(&book)
+
+	c.JSON(http.StatusOK, gin.H{"data": true})
 }
