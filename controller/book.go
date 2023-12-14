@@ -3,7 +3,6 @@ package controller
 import (
 	"book_api/database"
 	"book_api/model"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -66,8 +65,6 @@ func DeleteBook(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(">>>", &book)
-	fmt.Println("2 >>>", book)
 	database.Database.Delete(&book)
 
 	c.JSON(http.StatusOK, gin.H{"data": true})
