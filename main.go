@@ -1,6 +1,7 @@
 package main
 
 import (
+	"book_api/controller"
 	"book_api/database"
 	"book_api/model"
 	"fmt"
@@ -33,6 +34,8 @@ func loadEnv() {
 func serveApplication() {
 	router := gin.Default()
 
+	router.GET("/books", controller.FindBooks)
+	
 	router.Run(":8000")
 	fmt.Println("Server running on port 8000")
 }
