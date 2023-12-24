@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -34,6 +35,12 @@ func loadEnv() {
 func serveApplication() {
 	router := gin.Default()
 
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:8000", "http://localhost:3000"}
+	corsConfig.AllowCredentials = true
+
+	router.Use(cors.New(corsConfig))
+	
 	router.GET("/books", controller.GetBooks)
 	router.POST("/books", controller.CreateBook)
 	router.GET("/books/:id", controller.GetBookById)
